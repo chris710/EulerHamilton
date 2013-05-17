@@ -16,5 +16,13 @@
 
 int main()
 {
-    //STUB
+    int nasycenie,n;
+    cout<<"podaj liczbe wierzcholkow i nasycenie: "<<endl;
+    cin>>n>>nasycenie;
+    graf graph(n);
+
+    graph.CreateGraph(nasycenie);   //metody klasy po kropce
+
+
+
 }

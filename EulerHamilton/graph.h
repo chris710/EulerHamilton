@@ -11,7 +11,7 @@
 //
 
 
-
+using namespace std;
 
 ///BIBLIOTEKI
 #include<iostream>  //do operacji wej-wyj
@@ -25,6 +25,16 @@ class graf
 {
     public:                                                 //oznacza, że można z tego co poniżej można korzystać poza klasą
         int n;                                              //liczba wierzchołków
+        struct vertex
+        {
+            int id;
+            vertex* next;
+        };
+
+        graf(int liczba)                                    //konstruktor klasy, tworzy jej instancję (obiekt) o podanych parametrach
+        {
+            n=liczba;
+        }
         void CreateGraph(int nasycenie);                    //tworzy listę następników o podanym nasyceniu
 
 };
