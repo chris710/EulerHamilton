@@ -25,15 +25,16 @@ class graf
 {
     public:                                                 //oznacza, że można z tego co poniżej można korzystać poza klasą
         int n;                                              //liczba wierzchołków
-        struct vertex
+
+        struct vertex                                       //struktura wierzchołka (do listy następników)
         {
-            int id;
-            vertex* next;
+            int id;                                         //numer wierzchołka
+            vertex* next;                                   //następna pozycja na liście
         };
 
         graf(int liczba)                                    //konstruktor klasy, tworzy jej instancję (obiekt) o podanych parametrach
         {
-            n=liczba;
+            n=liczba;                                       //przypisujemy liczbę w argumencie jako ilość wierzchołków
         }
         void CreateGraph(int nasycenie);                    //tworzy listę następników o podanym nasyceniu
 
