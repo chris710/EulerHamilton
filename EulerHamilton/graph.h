@@ -6,8 +6,9 @@
 
 
 ///         TO-DO LIST
-//  -uzupełnić funkcje klasy grafu
-//  -uzupełnić funkcje szkieletu programu (zegarek, obsługa plików)
+//  -uzupełnić deklaracje funkcji klasy grafu [DONE]
+//  -uzupełnić funkcje szkieletu programu (zegarek, obsługa plików) [PRZENIESIONE DO MAINA]
+//  -dodać stosy i tablicę do wyszukiwania cykli
 //
 
 
@@ -17,6 +18,7 @@ using namespace std;
 #include<iostream>  //do operacji wej-wyj
 #include<time.h>    //do liczb pseudolosowych i mierzenia czasu
 #include<cstdlib>
+#include<stack>
 
 
 
@@ -37,5 +39,9 @@ class graf
             n=liczba;                                       //przypisujemy liczbę w argumencie jako ilość wierzchołków
         }
         void CreateGraph(int nasycenie);                    //tworzy listę następników o podanym nasyceniu
+        void FindEuler(int wierzcholek);                    //funkcja znajdująca cykl eulera
+        void FindHamilton(int wierzcholek);                 //funkcja znajdująca cykl hamiltona
+        void CreateGraphB();                                //tworzy graf niespójny (zadanie B)
+
 
 };

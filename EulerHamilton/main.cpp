@@ -8,6 +8,7 @@
 //  -interfejs(do sprawdzenia czy algorytm działa)
 //  -części A i B zadania
 //  -pomiar czasów zadań
+//  -obsługa plików
 //
 
 

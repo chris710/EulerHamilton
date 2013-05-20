@@ -5,7 +5,9 @@
 
 ///         TO-DO LIST
 //  -funkcja tworząca graf o podanym nasyceniu spełniający warunki zadania [DONE]
-//
+//  -funkcja znajdująca cykl eulera
+//  -funkcja znajdująca cykl hamiltona
+//  -funkcja tworząca graf niespójny
 //
 
 
@@ -61,69 +63,6 @@ void graf::CreateGraph(int nasycenie)                   //tworzenie metody klasy
 
     }
 
-
-
-    /*int i=n-2;
-    for(;ilosc_jedynek>0;)
-    {
-        //int i=n-1; //rand()%(n-2);     //losujemy wiersz macierzy
-
-        int parzystosc=0;       //zmienna do sprawdzania czy stopień jest parzysty
-
-        for(int j=i;j<n;j++)            //sprawdzamy jaki jest stopień krawędzi
-        {
-            if (macierz[i][j]==1)   parzystosc++;
-        }
-
-        //int j=(i+rand()%(n-i)+1);
-        int j;//=i+1;
-        //while(macierz[i][j] && j<=n)            //póki trafiamy na 1
-        do
-        {
-            j=(i+rand()%(n-i-1)+1);
-        }
-        while(macierz[i][j] && parzystosc<(n-i+1));
-
-        if(!macierz[i][j] && stopien[i]%2==1)//(parzystosc%2)==1)     //jeżeli wylosowane pole jest puste a stopień nieparzysty
-        {
-            macierz[i][j]=1;
-            stopien[i]++;
-            stopien[j]++;
-            ilosc_jedynek--;
-            parzystosc++;
-            break;
-        }
-        else if(!macierz[i][j] && stopien[i]<(n-2) && parzystosc<(n-i) )    //jeżeli stopień jest parzysty to dodajemy od razu 2
-        {
-            macierz[i][j]=1;
-            stopien[i]++;
-            stopien[j]++;
-            ilosc_jedynek--;
-            parzystosc++;
-
-            do
-            {
-                j=(i+rand()%(n-i-1)+1);
-            }
-            while(macierz[i][j] && parzystosc<(n-i+1));
-
-            if(!macierz[i][j])              //sprawdzamy czy są pełne
-            {
-                macierz[i][j]=1;
-                stopien[i]++;
-                stopien[j]++;
-                ilosc_jedynek--;
-                break;
-            }
-            break;
-        }
-
-        //j++;//=(i+rand()%(n-i)+1);     //losujemy nowe pola
-        if(i>0)
-            i--;
-        else    i=n-2;
-    }*/
-
     //ZMIENIAMY GRAF NA NIESKIEROWANY
     for(int i=0;i<n;i++)
     {
@@ -158,23 +97,7 @@ void graf::CreateGraph(int nasycenie)                   //tworzenie metody klasy
                 macierz[j][i]=1;
             }
         }
-//        if(stopien[i]%2==1 )//&& parzystosc>1)//parzystosc%2==1 && parzystosc>1)
-//        {
-//            int j=(i+rand()%(n-i-1)+1);
-//            if(macierz[i][j] && (j!=i+1) && parzystosc!=1)
-//            {
-//                macierz[i][j]=0;
-//                parzystosc--;
-//                stopien[i]--;
-//            }
-//            else// if(!(parzystosc>1))
-//            {
-//                macierz[i][j]=1;
-//                macierz[j][i]=1;
-//                stopien[i]++;
-//                stopien[j]++;
-//            }
-//        }
+
     }
 
 
@@ -231,3 +154,29 @@ void graf::CreateGraph(int nasycenie)                   //tworzenie metody klasy
     cout<<endl;
 
 }
+
+/////////////////////////////////////////////////////////////
+///     FUNKCJA ZNAJDUJĄCA CYKL EULERA
+/////////////////////////////////////////////////////////////
+void graf::FindEuler(int wierzcholek)
+{
+    //STUB
+}
+
+////////////////////////////////////////////////////////////
+///     FUNKCJA ZNAJDUJĄCA CYKL HAMILTONA
+////////////////////////////////////////////////////////////
+void graf::FindHamilton(int wierzcholek)
+{
+    //STUB
+}
+
+////////////////////////////////////////////////////////////
+///     FUNKCJA TWORZĄCA GRAF NIESPÓJNY (ZADANIE B)
+////////////////////////////////////////////////////////////
+void CreateGraphB()
+{
+    //STUB
+}
+
+
