@@ -5,10 +5,10 @@
 
 ///         TO-DO LIST
 //  -funkcja tworząca graf o podanym nasyceniu spełniający warunki zadania [DONE]
-//  -funkcja znajdująca cykl eulera
-//  -funkcja znajdująca cykl hamiltona
+//  -funkcja znajdująca cykl eulera[DONE]
+//  -funkcja znajdująca cykl hamiltona[DONE]
 //  -funkcja tworząca graf niespójny [DONE]
-//  -DFS [DONE]
+//
 
 
 
@@ -206,14 +206,15 @@ void graf::FindEuler(int v, nast* kopia)             //operację wyszukiwania cy
 ////////////////////////////////////////////////////////////
 bool graf::FindHamilton(int wierzcholek)
 {
+    /*
     visited[wierzcholek]=true; // odznaczamy jako odwiedzony
     hamilton.push(wierzcholek);  // wkladamy na stos
     list<int>::iterator tmp=lista[wierzcholek].begin();
 
     int length=hamilton.size(); // mierzymy dlugosc stosu
 
-    if(tmp==lista[wierzcholek].end())   cout<<"dupa";   cout<<*(lista[wierzcholek].end());
-    if(lista[wierzcholek].empty())  cout<<"dupa2";
+    //if(tmp==lista[wierzcholek].end())   cout<<"dupa";   cout<<*(lista[wierzcholek].end());
+    //if(lista[wierzcholek].empty())  cout<<"dupa2";
 
     while(tmp != lista[wierzcholek].end() ) // przechodzimy po sasiadach
     {
@@ -236,13 +237,52 @@ bool graf::FindHamilton(int wierzcholek)
         }
         if(!visited[*tmp]) // jesli nie jest jeszcze odwiedzony
         {
-            if(FindHamilton(*tmp)) // i nie znelziono cyklu to wykonujemy dalej
-            return true;
+            if(FindHamilton(*tmp) ) // i nie znelziono cyklu to wykonujemy dalej
+            return false;//true;
         }
         tmp++; // przechodzimy do nastepnego wierzcholka
     }
     visited[wierzcholek]=false;
     hamilton.pop();
+    return false;
+    */
+
+
+
+
+    hamilton.push(wierzcholek);         //wrzucamy pierwszy wierzchołek na stos
+    if(hamilton.size()==n)              //jeżeli mamy w stosie wszystkie wierzchołki (rozmiar stosu jest równy ilości wierzchołków)
+    {
+        for(list<int>::iterator i = lista[wierzcholek].begin(); i != lista[wierzcholek].end(); i++)     //przeglądamy całą listę
+            if((*i) == 0)                                   //sprawdzając czy zatoczyliśmy cykl (od zera zaczynamy cykl) CHEAT ŚMIECIU!
+            {
+                test=true;                                  //kończymy rekurencje
+                hamilton.push(0);                           //wrzucamy na stos pierwszy wierzchołek aby wyszedł cykl ZNOWU CHEAT!
+                return true;                                //operacja zakończona sukcesem!
+            }
+    }
+    else
+    {
+        visited[wierzcholek] = true;                        //oznaczamy wierzchołek jako przejrzany
+        for(list<int>::iterator x = lista[wierzcholek].begin(); x != lista[wierzcholek].end(); x++) //przeglądamy całą listę
+        {
+            if(!visited[*x] && !test)                                       //w poszukiwaniu nieprzejrzanych wierzchołków
+                if(FindHamilton(*x))                                        //wywołujemy rekurencyjnie
+                {                                                           //jeżeli znaleźliśmy cykl
+                    cout<<"Cykl Hamiltona: "<<endl;                         //to wypisujemy go na ekran
+                    while(!hamilton.empty() )
+                    {
+                        cout<<hamilton.top()<<" ";
+                        hamilton.pop();
+                    }
+                    cout<<endl<<endl;
+                    return false; // zwracam  wiadomosc ze znalezlismy i że nie trzeba go więcej wypisywać
+                }
+        }
+
+        visited[wierzcholek] = false;       //gdy się cofamy odznaczamy wierzchołek jako nietknięty
+    }
+    hamilton.pop();                         //wyrzucamy ze stosu jeżeli się cofamy
     return false;
 }
 
@@ -359,5 +399,33 @@ void graf::CreateGraphB(int nasycenie)
         }
         //if(nnext) nnext->next=NULL;
     }
+    ///wyświetla macierz i listę na ekranie
+    cout<<"Macierz sasiedztwa z izolowanym wierzcholkiem: "<<endl;
+    for(int i=0;i<n;i++)       //rząd
+    {
+        for(int j=0;j<n;j++)   //kolumna
+        {
+            cout<<macierz[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+    cout<<"Lista nastepnikow z izolowanym wierzcholkiem: "<<endl;
+    for(int i=0;i<n;i++)
+    {
+        cout<<i;
+        for(list<int>::iterator it = lista[i].begin(); it!=lista[i].end(); it++)
+        //vertex* nnext=lista[i].next;
+            cout<<"->"<< *it; //lista[i].id;
+        //while(nnext->next!=NULL)
+        //{
+        //    cout<<"->"<<    //nnext->id;
+            //nnext=nnext->next;
+        //}
+        cout<<endl;
+    }
+    cout<<endl<<endl;
+
+
 }
 

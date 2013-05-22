@@ -5,10 +5,10 @@
 
 
 ///         TO-DO LIST:
-//  -interfejs(do sprawdzenia czy algorytm działa)
-//  -części A i B zadania
+//  -interfejs(do sprawdzenia czy algorytm działa)[DONE]
+//  -części A i B zadania [DONE, MOŻNA ZAPISAĆ W INTERFEJSIE]
 //  -pomiar czasów zadań
-//  -obsługa plików
+//  -obsługa plików do zapisu czasów
 //
 
 
@@ -25,8 +25,19 @@ int main()
 
 
     graph.CreateGraph(nasycenie);   //metody klasy po kropce
-    graph.FindEuler(0,graph.lista);
-    graph.FindHamilton(0);
+    graph.FindHamilton(0);              //szukamy cyklu hamiltona
+    graph.FindEuler(0,graph.lista);     //i eulera
+    graph.CreateGraphB(nasycenie);      //tworzymy wybrakowany graf
+
+    if(!graph.hamilton.empty() )
+    {
+        while(!graph.hamilton.empty() )
+        {
+            graph.hamilton.pop();
+        }
+    }
+    cout<<graph.hamilton.empty();
+    graph.FindHamilton(rand()%graph.n); //i szukamy w nim cyklu hamiltona, którego nie znajdziemy
 
     return 0;
 }

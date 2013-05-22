@@ -1,14 +1,15 @@
 # depslib dependency file v1.0
-1369246114 source:c:\users\administrator\documents\github\eulerhamilton\eulerhamilton\main.cpp
+1369257316 source:c:\users\administrator\documents\github\eulerhamilton\eulerhamilton\main.cpp
 	"graph.h"
 
-1369246114 c:\users\administrator\documents\github\eulerhamilton\eulerhamilton\graph.h
+1369256146 c:\users\administrator\documents\github\eulerhamilton\eulerhamilton\graph.h
 	<iostream>
 	<time.h>
+	<fstream>
 	<cstdlib>
 	<stack>
 	<list>
 
-1369246319 source:c:\users\administrator\documents\github\eulerhamilton\eulerhamilton\graph.cpp
+1369257272 source:c:\users\administrator\documents\github\eulerhamilton\eulerhamilton\graph.cpp
 	"graph.h"
 
