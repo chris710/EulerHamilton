@@ -22,11 +22,11 @@ int main()
     cin>>n>>nasycenie;
     graf graph(n);
 
-    for(int i = 0; i<graph.n; i++)
-            graph.visited[i] = false;                     //czyścimy tablicę odwiedzonych
+
 
     graph.CreateGraph(nasycenie);   //metody klasy po kropce
+    graph.FindEuler(0,graph.lista);
+    graph.FindHamilton(0);
 
-
-
+    return 0;
 }

@@ -72,29 +72,32 @@ void graf::CreateGraph(int nasycenie)                   //tworzenie metody klasy
     }
 
     //I Z PARZYSTYMI STOPNIAMI WSZYSTKICH WIERZCHOŁKÓW
-    for(int i=0;i<n-1;i++)
+    for(int k=0;k<n;k++)
     {
-        int parzystosc=0;       //zmienna do sprawdzania czy stopień jest parzysty
-
-        for(int j=0;j<n;j++)            //sprawdzamy jaki jest stopień krawędzi
+        for(int i=0;i<n;i++)
         {
-            if (macierz[i][j]==1)   parzystosc++;
-        }
-        if(parzystosc%2==1)             //jeżeli wierzchołek jest nieparzysty
-        {
-            int j = rand()%n;
-            while(i==j || j==i+1 || (i==0 && j==n-1) || (i==n-1 && j==0)) j = rand()%n;
-                                            //szukamy j tak długo aż spełnia wszystkie warunki miejsca
+            int parzystosc=0;       //zmienna do sprawdzania czy stopień jest parzysty
 
-            if(macierz[i][j]==1 && parzystosc>1)        //jeżeli miejsce jest zajęte to je zerujemy
+            for(int j=0;j<n;j++)            //sprawdzamy jaki jest stopień krawędzi
             {
-                macierz[i][j]=0;
-                macierz[j][i]=0;
+                if (macierz[i][j]==1)   parzystosc++;
             }
-            else                                        //a jeżeli jest puste to zapełniamy
+            if(parzystosc%2==1)             //jeżeli wierzchołek jest nieparzysty
             {
-                macierz[i][j]=1;
-                macierz[j][i]=1;
+                int j = rand()%n;
+                while(i==j || j==i+1 || j==i-1 || (i==0 && j==n-1) || (i==n-1 && j==0)) j = rand()%n;
+                                                //szukamy j tak długo aż spełnia wszystkie warunki miejsca
+
+                if(macierz[i][j]==1) //&& parzystosc>1)        //jeżeli miejsce jest zajęte to je zerujemy
+                {
+                    macierz[i][j]=0;
+                    macierz[j][i]=0;
+                }
+                else                                        //a jeżeli jest puste to zapełniamy
+                {
+                    macierz[i][j]=1;
+                    macierz[j][i]=1;
+                }
             }
         }
     }
@@ -103,23 +106,26 @@ void graf::CreateGraph(int nasycenie)                   //tworzenie metody klasy
     ///tworzymy listę następników z macierzy
     for(int i=0;i<n;i++)
     {
-        lista[i].next=new vertex;
-        vertex* nnext = &lista[i];
-
+        //lista[i].next=new vertex;
+        //vertex* nnext = &lista[i];
+        //lista[i]=NULL;
+        //lista[i].push_back(new vertex);
         for(int j=0;j<n;j++)
         {
             if(macierz[i][j])
             {
-                nnext->id=j;
-                nnext->next=new vertex;
-                nnext=nnext->next;
+                //lista.back().
+                lista[i].push_back(j);
+                //neigh.back()->id=j;
+                //nnext=nnext->next;
+                //nnext->next=NULL;
             }
         }
-        if(nnext) nnext->next=NULL;
+        //if(nnext) nnext->next=NULL;
     }
 
     ///wyświetla macierz i listę na ekranie
-    /*cout<<"Macierz sasiedztwa:"<<endl;
+    cout<<"Macierz sasiedztwa:"<<endl;
     for(int i=0;i<n;i++)       //rząd
     {
         for(int j=0;j<n;j++)   //kolumna
@@ -132,47 +138,112 @@ void graf::CreateGraph(int nasycenie)                   //tworzenie metody klasy
     cout<<"Lista nastepnikow:"<<endl;
     for(int i=0;i<n;i++)
     {
-        vertex* nnext=lista[i].next;
-        cout<<i<<"->"<<lista[i].id;
-        while(nnext->next!=NULL)
-        {
-            cout<<"->"<<nnext->id;
-            nnext=nnext->next;
-        }
+        cout<<i;
+        for(list<int>::iterator it = lista[i].begin(); it!=lista[i].end(); it++)
+        //vertex* nnext=lista[i].next;
+            cout<<"->"<< *it; //lista[i].id;
+        //while(nnext->next!=NULL)
+        //{
+        //    cout<<"->"<<    //nnext->id;
+            //nnext=nnext->next;
+        //}
         cout<<endl;
     }
-    cout<<endl;*/
+    cout<<endl<<endl;
 }
 
 /////////////////////////////////////////////////////////////
 ///     FUNKCJA ZNAJDUJĄCA CYKL EULERA
 /////////////////////////////////////////////////////////////
-void graf::FindEuler(int wierzcholek,vertex* kopia)             //operację wyszukiwania cyklu wykonujemy na kopii listy następników
+void graf::FindEuler(int v, nast* kopia)             //operację wyszukiwania cyklu wykonujemy na kopii listy następników
 {
-    //STUB
+    for(int i = 0; i<n; i++)
+                visited[i] = false;
+
+    int wierzcholek=v;
+    //stos.push(wierzcholek);                     //wrzucamy na stos tymczasowy wierzchołek podany jako argument
+    stos.push(v);
+    list<int>::iterator tmp=kopia[wierzcholek].begin();
+    //vertex* tmp=&kopia[v];//[wierzcholek];
+    while(!stos.empty())                        //tak długo aż nie opróżnimy stosu
+    {
+        wierzcholek=stos.top();                 //ostatni ze stosu staje się przeglądanym wierzchołkiem
+
+        //if(tmp!=lista[i].end && visited[*tmp])
+          //  tmp++;
+        if(!lista[wierzcholek].empty())   //jeżeli są jeszcze jakieś krawędzie
+        {
+            tmp=kopia[wierzcholek].begin();
+            stos.push(*tmp);                               //to wrzucamy je na stos
+            //tmp++;
+            //visited[*tmp]=true;
+            kopia[*tmp].remove(wierzcholek);            //i usuwamy
+            kopia[wierzcholek].erase(tmp);              //w obie strony
+            wierzcholek=*tmp;
+            //visited[wierzcholek]=true;
+            //tmp=kopia[wierzcholek].begin();
+        }
+        else                                                        //jeżeli krawędzie się skończyły
+        {
+            //wierzcholek=stos.top();
+            euler.push(stos.top());//wierzcholek);               //stos euler tworzymy poprzez odwrócenie elementów stosu tymczasowego
+            stos.pop();
+        }
+    }
+    ///wyświetlanie stosu z cyklem eulera
+    cout<<"Cykl Eulera: "<<endl;
+    while(!euler.empty())
+    {
+        cout<<euler.top()<<" ";
+        euler.pop();
+    }
+    cout<<endl<<endl;
+
 }
 
 ////////////////////////////////////////////////////////////
 ///     FUNKCJA ZNAJDUJĄCA CYKL HAMILTONA
 ////////////////////////////////////////////////////////////
-void graf::FindHamilton(int wierzcholek)
+bool graf::FindHamilton(int wierzcholek)
 {
-    //STUB
-}
+    visited[wierzcholek]=true; // odznaczamy jako odwiedzony
+    hamilton.push(wierzcholek);  // wkladamy na stos
+    list<int>::iterator tmp=lista[wierzcholek].begin();
 
-////////////////////////////////////////////////////////////
-///     DFS LISTY NASTĘPNIKÓW
-////////////////////////////////////////////////////////////
-void graf::DFS(int wierzcholek)                                     //sortowanie topologiczne dla listy następników
-{
-    visited[wierzcholek]=true;                //oznaczamy wierzchołek jako odwiedzony
+    int length=hamilton.size(); // mierzymy dlugosc stosu
 
-    vertex *temp=lista[wierzcholek].next;      //ustawiamy tymczasowy wierzchołek na pierwszego nastepnika
-    while(temp->next)                     //dopóki jest jakiś sąsiad to go odwiedzamy
+    if(tmp==lista[wierzcholek].end())   cout<<"dupa";   cout<<*(lista[wierzcholek].end());
+    if(lista[wierzcholek].empty())  cout<<"dupa2";
+
+    while(tmp != lista[wierzcholek].end() ) // przechodzimy po sasiadach
     {
-        if(!visited[temp->id]) DFS(temp->id); //jesli nastepnik nie byl odwiedzony to odwiedzamy
-        temp=temp->next; //kolejny nastepnik
+        if(*tmp==wierzcholek) // jezeli obecny wierzcholek jest rowny startowemu
+        {
+            if(length==n-1) // to sprawdzamy czy zostaly uzyte wszystkie wierzcholki
+            {
+                hamilton.push(*tmp);         // jezeli tak to wkladamy go na stos
+                                                // jako ostatni element zeby zrobic ladny odczyt ;D
+
+                cout<<"Cykl Hamiltona: "<<endl;     // odczytujemy na ekran nasz cykl
+                while(!hamilton.empty() )
+                {
+                    cout<<hamilton.top()<<endl;
+                    hamilton.pop();
+                }
+                cout<<endl<<endl;
+                return true; // zwracam  wiadomosc ze znalezlismy
+            }
+        }
+        if(!visited[*tmp]) // jesli nie jest jeszcze odwiedzony
+        {
+            if(FindHamilton(*tmp)) // i nie znelziono cyklu to wykonujemy dalej
+            return true;
+        }
+        tmp++; // przechodzimy do nastepnego wierzcholka
     }
+    visited[wierzcholek]=false;
+    hamilton.pop();
+    return false;
 }
 
 ////////////////////////////////////////////////////////////
@@ -269,23 +340,24 @@ void graf::CreateGraphB(int nasycenie)
 
 
     ///tworzymy listę następników z macierzy
-    //vertex* lista=new vertex[n];
     for(int i=0;i<n;i++)
     {
-        lista[i].next=new vertex;
-        vertex* nnext = &lista[i];
-
+        //lista[i].next=new vertex;
+        //vertex* nnext = &lista[i];
+        //lista[i]=NULL;
+        //lista[i].push_back(new vertex);
         for(int j=0;j<n;j++)
         {
             if(macierz[i][j])
             {
-                nnext->id=j;
-                nnext->next=new vertex;
-                nnext=nnext->next;
+                //lista.back().
+                lista[i].push_back(j);
+                //neigh.back()->id=j;
+                //nnext=nnext->next;
+                //nnext->next=NULL;
             }
         }
-        if(nnext) nnext->next=NULL;
+        //if(nnext) nnext->next=NULL;
     }
 }
-
 
