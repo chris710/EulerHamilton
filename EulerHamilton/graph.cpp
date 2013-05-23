@@ -125,7 +125,7 @@ void graf::CreateGraph(int nasycenie)                   //tworzenie metody klasy
     }
 
     ///wyświetla macierz i listę na ekranie
-    cout<<"Macierz sasiedztwa:"<<endl;
+    /*cout<<"Macierz sasiedztwa:"<<endl;
     for(int i=0;i<n;i++)       //rząd
     {
         for(int j=0;j<n;j++)   //kolumna
@@ -150,6 +150,7 @@ void graf::CreateGraph(int nasycenie)                   //tworzenie metody klasy
         cout<<endl;
     }
     cout<<endl<<endl;
+    */
 }
 
 /////////////////////////////////////////////////////////////
@@ -191,6 +192,7 @@ void graf::FindEuler(int v, nast* kopia)             //operację wyszukiwania cy
         }
     }
     ///wyświetlanie stosu z cyklem eulera
+    /*
     cout<<"Cykl Eulera: "<<endl;
     while(!euler.empty())
     {
@@ -198,7 +200,7 @@ void graf::FindEuler(int v, nast* kopia)             //operację wyszukiwania cy
         euler.pop();
     }
     cout<<endl<<endl;
-
+    */
 }
 
 ////////////////////////////////////////////////////////////
@@ -269,6 +271,7 @@ bool graf::FindHamilton(int wierzcholek)
             if(!visited[*x] && !test)                                       //w poszukiwaniu nieprzejrzanych wierzchołków
                 if(FindHamilton(*x))                                        //wywołujemy rekurencyjnie
                 {                                                           //jeżeli znaleźliśmy cykl
+                    /*
                     cout<<"Cykl Hamiltona: "<<endl;                         //to wypisujemy go na ekran
                     while(!hamilton.empty() )
                     {
@@ -276,6 +279,7 @@ bool graf::FindHamilton(int wierzcholek)
                         hamilton.pop();
                     }
                     cout<<endl<<endl;
+                    */
                     return false; // zwracam  wiadomosc ze znalezlismy i że nie trzeba go więcej wypisywać
                 }
         }
@@ -399,7 +403,9 @@ void graf::CreateGraphB(int nasycenie)
         }
         //if(nnext) nnext->next=NULL;
     }
+
     ///wyświetla macierz i listę na ekranie
+    /*
     cout<<"Macierz sasiedztwa z izolowanym wierzcholkiem: "<<endl;
     for(int i=0;i<n;i++)       //rząd
     {
@@ -425,7 +431,45 @@ void graf::CreateGraphB(int nasycenie)
         cout<<endl;
     }
     cout<<endl<<endl;
-
+    */
 
 }
 
+////////////////////////////////////////////////////////////
+///     CZYSZCZENIE KLASY
+////////////////////////////////////////////////////////////
+void graf::Erease()
+{
+
+    for(int i = 0; i<n; i++)
+        visited[i] = false;                     //czyścimy tablicę odwiedzonych
+
+    for(int i = 0; i<n; i++)
+        delete &lista[i];                     //czyścimy tablicę odwiedzonych
+
+    if(!hamilton.empty() )                //czyścimy stos hamiltona
+    {
+        while(!hamilton.empty() )
+        {
+            hamilton.pop();
+        }
+    }
+
+    if(!euler.empty() )                //czyścimy stos eulera
+    {
+        while(!euler.empty() )
+        {
+            euler.pop();
+        }
+    }
+    if(!stos.empty() )                //czyścimy stos eulera
+    {
+        while(!stos.empty() )
+        {
+            stos.pop();
+        }
+    }
+    visited = new bool[n];
+    lista = new nast[n];
+    test=false;
+}

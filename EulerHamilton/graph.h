@@ -58,4 +58,5 @@ class graf
         void FindEuler(int v,nast* kopia);                  //funkcja znajdująca cykl eulera
         bool FindHamilton(int wierzcholek);                 //funkcja znajdująca cykl hamiltona
         void CreateGraphB(int nasycenie);                   //tworzy graf niespójny (zadanie B)
+        void Erease();
 };
