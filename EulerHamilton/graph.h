@@ -37,6 +37,7 @@ class graf
 
         bool *visited;                                      //deklaracja tablicy odwiedzonych
         bool test = false;                                  //czy odnaleziono cykl hamiltona?
+        int zero;                                           //izolowany wierzchołek
         typedef list<int> nast;                             //definicja listy następników pojedynczego wierzchołka
         nast* lista;                                        //tablica list
         stack<int> stos;                                    //stos pomocniczy do eulera

@@ -21,7 +21,11 @@ int main()
     clock_t end;
     float czas;
     fstream plik;
-    plik.open("test.txt");
+    fstream plike;
+    fstream plikh;
+    plikh.open("testh.txt",ios::out | ios::trunc);
+    plike.open("teste.txt",ios::out | ios::trunc);
+    plik.open("test.txt",ios::out | ios::trunc);
 
 
     int nasycenie,n;
@@ -35,8 +39,9 @@ int main()
     ///CZĘŚĆ A ZADANIA
     ///
     nasycenie=30;
-    plik<<"Hamilton dla 30%"<<endl;
-    cout<<"Rozpoczynam testy dla hamiltona"<<endl;
+    plikh<<"Hamilton dla 30%"<<endl;
+    plike<<"Euler dla 30%"<<endl;
+    cout<<"Rozpoczynam testy dla hamiltona i eulera dla 30%"<<endl;
     for(int i=1; i<11;i++)
     {
         graf graphA(200*i);
@@ -47,16 +52,27 @@ int main()
         graphA.FindHamilton(0);              //szukamy cyklu hamiltona
         end=clock();
         czas=(float)(end-start)/CLOCKS_PER_SEC;     //wyświetlanie czasu
-        plik<<czas<<endl;
+        plikh<<czas<<endl;
         graphA.Erease();
 
-        cout<<"Ukonczono testy dla "<<200*i<<" wierzcholkow"<<endl;
+        cout<<"Hamilton "<<200*i<<" wierzcholkow"<<endl;
+
+        start=clock();
+        graphA.FindEuler(0,graphA.lista);     //i eulera
+        end=clock();
+        czas=(float)(end-start)/CLOCKS_PER_SEC;     //wyświetlanie czasu
+        plike<<czas<<endl;
+        graphA.Erease();
+
+        cout<<"Euler "<<200*i<<" wierzcholkow"<<endl;
     }
-    plik<<endl<<endl;
+    plike<<endl<<endl;
+    plikh<<endl<<endl;
 
     nasycenie=70;
-    plik<<"Hamilton dla 70%"<<endl;
-    cout<<"Rozpoczynam testy dla hamiltona"<<endl;
+    plikh<<"Hamilton dla 70%"<<endl;
+    plike<<"Euler dla 70%"<<endl;
+    cout<<"Rozpoczynam testy dla hamiltona i eulera dla 70%"<<endl;
     for(int i=1; i<11;i++)
     {
         graf graphA(200*i);
@@ -67,55 +83,22 @@ int main()
         graphA.FindHamilton(0);              //szukamy cyklu hamiltona
         end=clock();
         czas=(float)(end-start)/CLOCKS_PER_SEC;     //wyświetlanie czasu
-        plik<<czas<<endl;
+        plikh<<czas<<endl;
         graphA.Erease();
 
-        cout<<"Ukonczono testy dla "<<200*i<<" wierzcholkow"<<endl;
-    }
-    plik<<endl<<endl;
-
-
-    nasycenie=30;
-    plik<<"Euler dla 30%"<<endl;
-    cout<<"Rozpoczynam testy dla eulera"<<endl;
-    for(int i=1; i<11;i++)
-    {
-        graf graphA(200*i);
-        graphA.CreateGraph(nasycenie);   //metody klasy po kropce
-
+        cout<<"Hamilton "<<200*i<<" wierzcholkow"<<endl;
 
         start=clock();
         graphA.FindEuler(0,graphA.lista);     //i eulera
         end=clock();
         czas=(float)(end-start)/CLOCKS_PER_SEC;     //wyświetlanie czasu
-        plik<<czas<<endl;
+        plike<<czas<<endl;
         graphA.Erease();
 
-        cout<<"Ukonczono testy dla "<<200*i<<" wierzcholkow"<<endl;
+        cout<<"Euler "<<200*i<<" wierzcholkow"<<endl;
     }
-    plik<<endl<<endl;
-
-
-    nasycenie=70;
-    plik<<"Euler dla 70%"<<endl;
-    cout<<"Rozpoczynam testy dla eulera"<<endl;
-    for(int i=1; i<11;i++)
-    {
-        graf graphA(200*i);
-        graphA.CreateGraph(nasycenie);   //metody klasy po kropce
-
-
-        start=clock();
-        graphA.FindEuler(0,graphA.lista);     //i eulera
-        end=clock();
-        czas=(float)(end-start)/CLOCKS_PER_SEC;     //wyświetlanie czasu
-        plik<<czas<<endl;
-        graphA.Erease();
-
-        cout<<"Ukonczono testy dla "<<200*i<<" wierzcholkow"<<endl;
-    }
-    plik<<endl<<endl;
-
+    plike<<endl<<endl;
+    plikh<<endl<<endl;
 
 
     ///
@@ -124,11 +107,14 @@ int main()
     nasycenie=50;
     plik<<"Hamilton dla grafu niespójnego 50%"<<endl;
     cout<<"Rozpoczynam testy dla niespojnego hamiltona"<<endl;
-    for(int i=1; i<15;i++)
-    {
+    for(int i=5; i<15;i++)
+    /*{
         graf graphB(i);
         graphB.CreateGraphB(nasycenie);   //tworzymy graf niespójny
 
+        int v=rand()%(n-1);
+        while(v==graphB.zero)
+            v=rand()%(n-1);
 
         start=clock();
         graphB.FindHamilton(0);              //szukamy cyklu hamiltona
@@ -137,12 +123,15 @@ int main()
         plik<<czas<<endl;
         graphB.Erease();
 
-        cout<<"Ukonczono testy dla "<<i<<" wierzcholkow"<<endl;
-    }
+        cout<<"Ukonczono testy dla "<<i<<endl;
+    }*/
     plik<<endl<<endl;
     //graf graphB(n);
     //graphB.CreateGraphB(nasycenie);      //tworzymy wybrakowany graf
     //graphB.FindHamilton(2); //i szukamy w nim cyklu hamiltona, którego nie znajdziemy
 
+    plikh.close();
+    plike.close();
+    plik.close();
     return 0;
 }

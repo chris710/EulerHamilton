@@ -375,11 +375,11 @@ void graf::CreateGraphB(int nasycenie)
     }
 
     //PO WSZYSTKICH KROKACH NA MACIERZY ZERUJEMY LOSOWY WIERZCHOŁEK
-    int i=rand()%n;
+    int zero=rand()%n;
     for(int j=0;j<n;j++)
     {
-        macierz[i][j]=0;
-        macierz[j][i]=0;
+        macierz[zero][j]=0;
+        macierz[j][zero]=0;
     }
 
 
